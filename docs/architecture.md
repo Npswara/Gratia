@@ -1,4 +1,4 @@
-flowchart TD
+```mermaid flowchart TD
   subgraph Client[Frontend]
     IDX[index.tsx]\n    APP[App.tsx]
     ROUTER[React Router]
@@ -45,3 +45,4 @@ flowchart TD
   style Services fill:#fff7ed,stroke:#333
   style Storage fill:#f0fff4,stroke:#333
   style Assets fill:#fff5f8,stroke:#333
+```
