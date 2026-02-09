@@ -1,0 +1,8 @@
+{
+  "name": "Gratia - Harmony in Parenthood",
+  "description": "A comprehensive companion for expecting and new parents. Gratia connects mothers and fathers with shared data, AI-powered meal planning, pregnancy countdowns, and emotional support tools.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ]
+}

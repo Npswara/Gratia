@@ -1,0 +1,68 @@
+%%{init: {'theme':'default', 'flowchart': { 'nodeSpacing': 80, 'rankSpacing': 60 }, 'fontFamily': '"Quicksand", sans-serif' }}%%
+flowchart TD
+  %% Title and high-level grouping for clarity
+  title["Gratia — Architecture Overview"]
+
+  subgraph Client[Frontend]
+    direction TB
+    IDX["index.tsx"]
+    APP["App.tsx<br/>(entry + shared state + routing)"]
+    ROUTER["React Router"]
+    IDX --> APP --> ROUTER
+    ROUTER --> FD["pages/FatherDashboard.tsx"]
+    ROUTER --> MD["pages/MotherDashboard.tsx"]
+    ROUTER --> ONB["pages/OnboardingPage.tsx"]
+    ROUTER --> LND["pages/LandingPage.tsx"]
+    ROUTER --> ROLE["pages/RoleSelectionPage.tsx"]
+    FD -->|uses| TYPES((types.ts\nSharedData))
+    MD -->|uses| TYPES
+    FD -->|uses| CONSTS((constants.ts))
+    MD -->|uses| CONSTS
+    FD -->|uses| TRANS((translations.ts))
+    MD -->|uses| TRANS
+  end
+
+  subgraph Services[Backend & Integrations]
+    GEM["services/geminiService.ts<br/>(AI helpers)"]
+    GENAI["Google GenAI API"]
+    GEM -->|calls| GENAI
+  end
+
+  subgraph Storage[Persistence]
+    APP -->|reads/writes| LS["localStorage<br/>key: gratia_sync_pairingCode"]
+    FD -->|updates| LS
+    MD -->|updates| LS
+  end
+
+  subgraph Assets
+    HTML["index.html"]
+    ICON["gratia.png"]
+    MANIFEST["manifest.json"]
+    HTML --> APP
+    ICON --> HTML
+    MANIFEST --> HTML
+  end
+
+  GEM -->|used by| FD
+  GEM -->|used by| MD
+  TILES[[UI Components & Icons]] --> FD
+  TILES --> MD
+
+  %% Legend to explain symbols and flows
+  subgraph Legend[Legend]
+    direction LR
+    L1["Component"]:::legend
+    L2["Service / API"]:::legend
+    L3["Storage / Persistence"]:::legend
+  end
+
+  classDef legend fill:#ffffff,stroke:#333,stroke-width:1px;
+  class Client legend;
+  class Services legend;
+  class Storage legend;
+  class Assets legend;
+
+  title --- Client
+  title --- Services
+  title --- Storage
+  title --- Assets
